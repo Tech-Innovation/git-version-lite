@@ -468,7 +468,9 @@ jobs:
 
       - name: Then the outcome should be success
         if: always()
-        run: ./gvl/test/assert-values-match.sh --name "step outcome" --expected "success" --actual "${{ steps.prerelease-version.outcome }}"
+        run: |
+          chmod +x ./gvl/test/assert-values-match.sh
+          ./gvl/test/assert-values-match.sh --name "step outcome" --expected "success" --actual "${{ steps.prerelease-version.outcome }}"
 
       - name: Then the outputs should be based on the next minor version which includes the branch name in NEXT_VERSION
         if: always()
@@ -744,7 +746,9 @@ jobs:
       #-----------------------
       - name: '-------------------------------------------------------------------------------------------------------'
         if: always()
-        run: ./gvl/test/setup/reset-env-vars.sh
+        run: |
+          chmod +x ./gvl/test/assert-values-match.sh
+          ./gvl/test/setup/reset-env-vars.sh
 
       - name: When a pre-release version is requested from git-version-lite
         if: always()
