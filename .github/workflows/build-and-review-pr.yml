@@ -748,7 +748,7 @@ jobs:
       - name: '-------------------------------------------------------------------------------------------------------'
         if: always()
         run: |
-          chmod +x ./gvl/test/reset-env-vars.sh
+          chmod +x ./gvl/test/setup/reset-env-vars.sh
           ./gvl/test/setup/reset-env-vars.sh
 
       - name: When a pre-release version is requested from git-version-lite
