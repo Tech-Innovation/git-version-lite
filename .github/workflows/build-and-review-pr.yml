@@ -294,7 +294,9 @@ jobs:
 
       - name: Then the outcome should be failure
         if: always()
-        run: ./gvl/test/assert-values-match.sh --name "step outcome" --expected "failure" --actual "${{ steps.unexpected-release-type.outcome }}"
+        run: |
+          chmod +x ./gvl/test/assert-values-match.sh
+          ./gvl/test/assert-values-match.sh --name "step outcome" --expected "failure" --actual "${{ steps.unexpected-release-type.outcome }}"
 
       - name: Then the outputs should be empty
         if: always()
