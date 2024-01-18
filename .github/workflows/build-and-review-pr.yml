@@ -774,7 +774,8 @@ jobs:
           prefix="v"
           patch="${{ matrix.next-patch }}"
           branch="${{ env.TEST_BRANCH }}"
-          substring="$patch-$branch."
+          substring="$patch-$branch." |
+          chmod +x ./gvl/test/assert-string-contains-substring.sh
           ./gvl/test/assert-string-contains-substring.sh --name "NEXT_VERSION"           --substring "$prefix$substring" --string "${{ steps.prerelease.outputs.NEXT_VERSION }}"
           ./gvl/test/assert-string-contains-substring.sh --name "NEXT_VERSION_NO_PREFIX" --substring "$substring"        --string "${{ steps.prerelease.outputs.NEXT_VERSION_NO_PREFIX }}"
 
