@@ -74,7 +74,7 @@ jobs:
       - name: If PR is merged to main - Check for code changes to the action source code
         if: env.MERGE_TO_MAIN == 'true'
         id: source-code
-        uses: Tech-Innovation/did-custom-action-code-change@v1
+        uses: Tech-Innovation/.github/.github/actions/did-custom-action-code-change@main
         with:
           files-with-code: 'action.yml,package.json,package-lock.json'
           folders-with-code: 'src,dist'
