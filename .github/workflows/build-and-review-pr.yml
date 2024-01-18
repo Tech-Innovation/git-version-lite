@@ -294,7 +294,9 @@ jobs:
 
       - name: Then the outcome should be failure
         if: always()
-        run: ./gvl/test/assert-values-match.sh --name "step outcome" --expected "failure" --actual "${{ steps.unexpected-release-type.outcome }}"
+        run: |
+          chmod +x ./gvl/test/assert-values-match.sh
+          ./gvl/test/assert-values-match.sh --name "step outcome" --expected "failure" --actual "${{ steps.unexpected-release-type.outcome }}"
 
       - name: Then the outputs should be empty
         if: always()
@@ -466,7 +468,9 @@ jobs:
 
       - name: Then the outcome should be success
         if: always()
-        run: ./gvl/test/assert-values-match.sh --name "step outcome" --expected "success" --actual "${{ steps.prerelease-version.outcome }}"
+        run: |
+          chmod +x ./gvl/test/assert-values-match.sh
+          ./gvl/test/assert-values-match.sh --name "step outcome" --expected "success" --actual "${{ steps.prerelease-version.outcome }}"
 
       - name: Then the outputs should be based on the next minor version which includes the branch name in NEXT_VERSION
         if: always()
@@ -478,6 +482,7 @@ jobs:
           patch="${{ env.NEXT_PATCH_TAG_FOR_MINOR_RELEASE_TYPE}}"
           branch="${{ env.TEST_BRANCH }}"
           substring="$patch-$branch."
+          chmod +x ./gvl/test/assert-string-contains-substring.sh
           ./gvl/test/assert-string-contains-substring.sh --name "NEXT_VERSION"           --substring "$prefix$substring" --string "${{ steps.prerelease-version.outputs.NEXT_VERSION }}"
           ./gvl/test/assert-string-contains-substring.sh --name "NEXT_VERSION_NO_PREFIX" --substring "$substring"        --string "${{ steps.prerelease-version.outputs.NEXT_VERSION_NO_PREFIX }}"
 
@@ -742,7 +747,9 @@ jobs:
       #-----------------------
       - name: '-------------------------------------------------------------------------------------------------------'
         if: always()
-        run: ./gvl/test/setup/reset-env-vars.sh
+        run: |
+          chmod +x ./gvl/test/setup/reset-env-vars.sh
+          ./gvl/test/setup/reset-env-vars.sh
 
       - name: When a pre-release version is requested from git-version-lite
         if: always()
@@ -754,7 +761,9 @@ jobs:
 
       - name: Then the outcome should be success
         if: always()
-        run: ./gvl/test/assert-values-match.sh --name "step outcome" --expected "success" --actual "${{ steps.prerelease.outcome }}"
+        run: |
+          chmod +x ./gvl/test/assert-values-match.sh
+          ./gvl/test/assert-values-match.sh --name "step outcome" --expected "success" --actual "${{ steps.prerelease.outcome }}"
 
       - name: Then the outputs should contain the next ${{ matrix.expected-increment }} version which includes the branch name in NEXT_VERSION
         if: always()
@@ -765,7 +774,8 @@ jobs:
           prefix="v"
           patch="${{ matrix.next-patch }}"
           branch="${{ env.TEST_BRANCH }}"
-          substring="$patch-$branch."
+          substring="$patch-$branch." |
+          chmod +x ./gvl/test/assert-string-contains-substring.sh
           ./gvl/test/assert-string-contains-substring.sh --name "NEXT_VERSION"           --substring "$prefix$substring" --string "${{ steps.prerelease.outputs.NEXT_VERSION }}"
           ./gvl/test/assert-string-contains-substring.sh --name "NEXT_VERSION_NO_PREFIX" --substring "$substring"        --string "${{ steps.prerelease.outputs.NEXT_VERSION_NO_PREFIX }}"
 
